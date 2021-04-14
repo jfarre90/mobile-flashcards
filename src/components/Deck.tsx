@@ -17,7 +17,7 @@ const Deck: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     };
 
     const handleStartQuizNavigate = () => {
-        navigation.navigate('Quiz');
+        navigation.navigate('Quiz', { deckId });
     };
 
     const handleDeleteDeck = () => {

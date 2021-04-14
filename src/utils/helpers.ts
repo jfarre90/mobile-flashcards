@@ -69,7 +69,7 @@ export async function getDeck(deckId: string): Promise<IDeck | void> {
     }
 }
 
-export async function saveDeckTitle(deckTitle: string): Promise<void> {
+export async function _saveDeckTitle(deckTitle: string): Promise<void> {
     try {
         const decks: { [key: string]: IDeck } | void = await getDecks();
 

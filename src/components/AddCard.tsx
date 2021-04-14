@@ -7,8 +7,8 @@ import { handleAddCardToDeck } from '../actions/decks';
 const AddCard: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const { deckId } = route.params!;
 
-    const [questionText, onQuestionTextChange] = useState('');
-    const [answerText, onAnswerTextChange] = useState('');
+    const [questionText, setQuestionTextChange] = useState('');
+    const [answerText, setAnswerTextChange] = useState('');
 
     const dispatch = useDispatch();
     const handleAddCard = () => {
@@ -32,10 +32,10 @@ const AddCard: FC<StackScreenProps<any>> = ({ navigation, route }) => {
                 <Text>Add a card to deck: {deckId}</Text>
                 <TextInput
                     placeholder="Add your question..."
-                    onChangeText={onQuestionTextChange}
+                    onChangeText={setQuestionTextChange}
                     value={questionText}
                 />
-                <TextInput placeholder="Add an answer..." onChangeText={onAnswerTextChange} value={answerText} />
+                <TextInput placeholder="Add an answer..." onChangeText={setAnswerTextChange} value={answerText} />
                 <View>
                     <Button onPress={handleAddCard} title="Submit" />
                 </View>
