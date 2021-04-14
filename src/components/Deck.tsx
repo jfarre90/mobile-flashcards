@@ -2,7 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { Button, ScrollView, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteDeck } from '../actions/decks';
+import { handleDeleteDeck } from '../actions/decks';
 import { IStoreState } from '../reducers';
 import { IDeck } from '../utils/helpers';
 
@@ -20,8 +20,8 @@ const Deck: FC<StackScreenProps<any>> = ({ navigation, route }) => {
         navigation.navigate('Quiz', { deckId });
     };
 
-    const handleDeleteDeck = () => {
-        dispatch(deleteDeck(deckId));
+    const handleDeleteDeckPress = () => {
+        dispatch(handleDeleteDeck(deckId));
         navigation.goBack();
     };
 
@@ -38,7 +38,7 @@ const Deck: FC<StackScreenProps<any>> = ({ navigation, route }) => {
             <View>
                 <Button title="Add Card" color="gray" onPress={handleAddCardNavigate} />
                 <Button title="Start Quiz" color="gray" onPress={handleStartQuizNavigate} />
-                <Button title="Delete Deck" color="gray" onPress={handleDeleteDeck} />
+                <Button title="Delete Deck" color="gray" onPress={handleDeleteDeckPress} />
             </View>
         </ScrollView>
     );

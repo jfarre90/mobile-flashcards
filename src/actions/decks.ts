@@ -96,7 +96,7 @@ export function handleDeleteDeck(deckId: string): (dispatch: Dispatch) => Promis
 }
 
 
-export function deleteDeck(deckId: string): DeckActionTypes {
+function deleteDeck(deckId: string): DeckActionTypes {
     return {
         type: DELETE_DECK,
         deckId

@@ -1,4 +1,4 @@
-import { ADD_CARD, DELETE_DECK, GET_DECKS } from '../actions/decks';
+import { ADD_CARD, ADD_DECK, DELETE_DECK, GET_DECKS } from '../actions/decks';
 import { ReduxAction } from '../actions/shared';
 import { IDeck } from '../utils/helpers';
 
@@ -9,7 +9,6 @@ export default function decks(state: { [deckId: string]: IDeck } = {}, action: R
                 ...state,
                 ...action.decks
             };
-
         case ADD_CARD:
             return {
                 ...state,
@@ -20,7 +19,15 @@ export default function decks(state: { [deckId: string]: IDeck } = {}, action: R
                         action.card
                     ]
                 }
-            }
+            };
+        case ADD_DECK:
+            return {
+                ...state,
+                [action.deckId]: {
+                    title: action.deckId,
+                    questions: []
+                }
+            };
         case DELETE_DECK:
             const { [action.deckId]: value, ...newState } = state;
 

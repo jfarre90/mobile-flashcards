@@ -105,7 +105,6 @@ export async function _addCardToDeck(deckId: string, card: IQuestionCard): Promi
     }
 }
 
-// TODO - review why this is not working
 export async function _deleteDeck(deckId: string): Promise<void> {
     try {
         const decks: { [key: string]: IDeck } | void = await getDecks();

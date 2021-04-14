@@ -24,7 +24,7 @@ const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const [score, setScore] = useState(1);
 
     const handleQuizAnswer = (isCorrect: boolean) => {
-        // TODO - set local notification reset here
+        //TODO - set local notification reset here
 
         if (isCorrect) {
             setScore(score + 1);
