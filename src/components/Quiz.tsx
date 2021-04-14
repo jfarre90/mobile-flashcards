@@ -7,7 +7,7 @@ import { IDeck, IQuestionCard } from '../utils/helpers';
 import Card from './Card';
 
 const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
-    const { deckId } = route.params!;
+    const { deckId, isRestart } = route.params!;
 
     const deck: IDeck | undefined = useSelector((state: IStoreState) => state.decks[deckId]);
     const cards: IQuestionCard[] | undefined = useSelector((state: IStoreState) => state.decks[deckId].questions);
@@ -21,7 +21,14 @@ const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     }
 
     const [questionsPosition, setQuestionsPosition] = useState(0);
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState(1);
+    const [restart, setRestart] = useState(isRestart);
+
+    if (restart) {
+        setScore(0);
+        setQuestionsPosition(0);
+        setRestart(false);
+    }
 
     const handleQuizAnswer = (isCorrect: boolean) => {
         // TODO - set local notification reset here
@@ -30,7 +37,7 @@ const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
             setScore(score + 1);
         }
 
-        if (questionsPosition === cards.length) {
+        if (questionsPosition === cards.length - 1) {
             navigation.navigate('QuizResult', { deckId, score, totalQuestions: cards.length });
         } else {
             setQuestionsPosition(questionsPosition + 1);
@@ -39,7 +46,7 @@ const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
 
     const currentCard: IQuestionCard = cards[questionsPosition];
 
-    return (
+    return currentCard ? (
         <ScrollView>
             <Text>Quiz for {deck.title} deck</Text>
             <Text>
@@ -63,6 +70,10 @@ const Quiz: FC<StackScreenProps<any>> = ({ navigation, route }) => {
                 />
             </View>
         </ScrollView>
+    ) : (
+        <View>
+            <Text>Reached the end...</Text>
+        </View>
     );
 };
 

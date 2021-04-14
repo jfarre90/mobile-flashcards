@@ -11,10 +11,11 @@ const DeckList: FC<StackScreenProps<any>> = ({ navigation }) => {
 
     const loading = false;
 
+    //TODO - fix this reload to avoid running continuously
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(handleInitialData());
-    }, []);
+    });
 
     const handleDeckPress = (deckId: string) => {
         navigation.navigate('Deck', { deckId });

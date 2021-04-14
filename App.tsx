@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
 import React, { FC } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, Store } from 'redux';
@@ -23,13 +22,10 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreenNavigator: FC = () => {
     return (
-        <Stack.Navigator initialRouteName="DeckList">
-            <Stack.Screen name="DeckList" component={DeckList} options={{ title: 'Available Decks' }} />
-            <Stack.Screen name="Deck" component={Deck} options={{ title: 'Deck view' }} />
-            <Stack.Screen name="AddCard" component={AddCard} options={{ title: 'Add Card' }} />
-            <Stack.Screen name="Quiz" component={Quiz} options={{ title: 'Deck Quiz' }} />
-            <Stack.Screen name="QuizResult" component={QuizResult} options={{ title: 'Quiz Result' }} />
-        </Stack.Navigator>
+        <Tab.Navigator initialRouteName="DeckList">
+            <Tab.Screen name="DeckList" component={DeckList} options={{ title: 'Available Decks' }} />
+            <Tab.Screen name="AddDeck" component={AddDeck} options={{ title: 'Add Deck' }} />
+        </Tab.Navigator>
     );
 };
 
@@ -37,11 +33,14 @@ const App: FC = () => {
     return (
         <Provider store={store}>
             <NavigationContainer>
-                <Tab.Navigator initialRouteName="Home">
-                    <Tab.Screen name="Home" component={HomeScreenNavigator} options={{ title: 'Available Decks' }} />
-                    <Tab.Screen name="AddDeck" component={AddDeck} options={{ title: 'Add Deck' }} />
-                    <StatusBar style="auto" />
-                </Tab.Navigator>
+                <Stack.Navigator>
+                    <Stack.Screen name="Home" component={HomeScreenNavigator} options={{ title: 'Available Decks' }} />
+                    <Stack.Screen name="DeckList" component={DeckList} options={{ title: 'Available Decks' }} />
+                    <Stack.Screen name="Deck" component={Deck} options={{ title: 'Deck view' }} />
+                    <Stack.Screen name="AddCard" component={AddCard} options={{ title: 'Add Card' }} />
+                    <Stack.Screen name="Quiz" component={Quiz} options={{ title: 'Deck Quiz' }} />
+                    <Stack.Screen name="QuizResult" component={QuizResult} options={{ title: 'Quiz Result' }} />
+                </Stack.Navigator>
             </NavigationContainer>
         </Provider>
     );
