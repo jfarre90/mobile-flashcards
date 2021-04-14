@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { IDeck, IQuestionCard, _addCardToDeck, _saveDeckTitle } from "../utils/helpers";
+import { IDeck, IQuestionCard, _addCardToDeck, _deleteDeck, _saveDeckTitle } from "../utils/helpers";
 
 export const GET_DECKS = 'GET_DECKS';
 export const ADD_DECK = 'ADD_DECK';
@@ -79,6 +79,22 @@ function addCardToDeck(deckId: string, card: IQuestionCard): DeckActionTypes {
         card
     };
 }
+
+
+export function handleDeleteDeck(deckId: string): (dispatch: Dispatch) => Promise<any> {
+    return async (dispatch: Dispatch): Promise<any> => {
+        dispatch(deleteDeck(deckId));
+
+        try {
+            _deleteDeck(deckId);
+        } catch (err) {
+            //TODO - add reverting the removal of the deck if error
+            // dispatch(removeCardFromDeck(deckId, card));
+            // alert('There was an error submitting your answer. Try again!');
+        }
+    };
+}
+
 
 export function deleteDeck(deckId: string): DeckActionTypes {
     return {

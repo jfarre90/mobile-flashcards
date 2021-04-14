@@ -105,9 +105,14 @@ export async function _addCardToDeck(deckId: string, card: IQuestionCard): Promi
     }
 }
 
-export async function deleteDeck(deckId: string): Promise<void> {
+// TODO - review why this is not working
+export async function _deleteDeck(deckId: string): Promise<void> {
     try {
-        // TODO- write delete function for the AsyncStorage
+        const decks: { [key: string]: IDeck } | void = await getDecks();
+        if (decks) {
+            const { [deckId]: value, ...otherDecks } = decks;
+            await AsyncStorage.setItem(DECKS_DATA_KEY, JSON.stringify(otherDecks))
+        }
     } catch (e) {
         console.error(`#### Error while removing deck :${deckId}: :`, e);
     }

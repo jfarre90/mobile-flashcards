@@ -6,8 +6,7 @@ const QuizResult: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const { deckId, score, totalQuestions } = route.params!;
 
     const handleQuizRestart = () => {
-        //TODO - check why restart is not working
-        navigation.navigate('Quiz', { isRestart: true });
+        navigation.push('Quiz', { deckId });
     };
 
     const handleReturnToDeck = () => {
