@@ -1,8 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
-import { Alert, Button, KeyboardAvoidingView, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, ScrollView, Text, TextInput } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { handleAddCardToDeck } from '../actions/decks';
+import { globalStyles } from '../utils/styles';
+import CustomButton from './CustomButton';
 
 const AddCard: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const { deckId } = route.params!;
@@ -23,22 +25,29 @@ const AddCard: FC<StackScreenProps<any>> = ({ navigation, route }) => {
         }
 
         dispatch(handleAddCardToDeck(deckId, { question: questionText, answer: answerText }));
+
+        setQuestionTextChange('');
+        setAnswerTextChange('');
         navigation.goBack();
     };
 
     return (
         <ScrollView>
             <KeyboardAvoidingView behavior="padding">
-                <Text>Add a card to deck: {deckId}</Text>
+                <Text style={globalStyles.titleText}>Add a card to deck: {deckId}</Text>
                 <TextInput
+                    style={globalStyles.textInput}
                     placeholder="Add your question..."
                     onChangeText={setQuestionTextChange}
                     value={questionText}
                 />
-                <TextInput placeholder="Add an answer..." onChangeText={setAnswerTextChange} value={answerText} />
-                <View>
-                    <Button onPress={handleAddCard} title="Submit" />
-                </View>
+                <TextInput
+                    style={globalStyles.textInput}
+                    placeholder="Add an answer..."
+                    onChangeText={setAnswerTextChange}
+                    value={answerText}
+                />
+                <CustomButton onPress={handleAddCard} title="Submit" />
             </KeyboardAvoidingView>
         </ScrollView>
     );

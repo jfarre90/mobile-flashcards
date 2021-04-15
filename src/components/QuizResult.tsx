@@ -1,6 +1,11 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { FC } from 'react';
-import { Button, ScrollView, Text, View } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { handleNotificationSchedule } from '../actions/decks';
+import { globalStyles } from '../utils/styles';
+import CustomButton from './CustomButton';
+import Separator from './Separator';
 
 const QuizResult: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const { deckId, score, totalQuestions } = route.params!;
@@ -13,17 +18,26 @@ const QuizResult: FC<StackScreenProps<any>> = ({ navigation, route }) => {
         navigation.navigate('Deck', { deckId });
     };
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(handleNotificationSchedule());
+    }, []);
+
     return (
         <ScrollView>
-            <Text>Your result for the {deckId} deck quiz</Text>
+            <Text style={globalStyles.titleText}>Your result for the {deckId} deck quiz</Text>
 
             <View>
-                <Text>You answered {(score / totalQuestions) * 100}% of the questions correctly! </Text>
+                <Text style={globalStyles.subTitleText}>
+                    You answered {Math.round((score / totalQuestions) * 10000) / 100}% of the questions correctly!{' '}
+                </Text>
             </View>
 
             <View>
-                <Button title="Restart Quiz" onPress={handleQuizRestart} />
-                <Button title="Back to Deck" onPress={handleReturnToDeck} />
+                <Separator />
+                <CustomButton title="Restart Quiz" onPress={handleQuizRestart} />
+                <Separator />
+                <CustomButton title="Back to Deck" onPress={handleReturnToDeck} />
             </View>
         </ScrollView>
     );

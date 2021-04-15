@@ -1,29 +1,50 @@
-import React, { FC, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { globalStyles } from '../utils/styles';
 
 export interface ICardProps {
     question: string;
     answer: string;
+    showAnswer: boolean;
+    handleCardFlip: () => void;
 }
 
-const Card: FC<ICardProps> = ({ question, answer }) => {
-    const [showAnswer, setShowAnswer] = useState(false);
-
-    const handleCardFlip = () => {
-        setShowAnswer(!showAnswer);
-    };
-
+const Card: FC<ICardProps> = ({ question, answer, showAnswer, handleCardFlip }) => {
     return showAnswer ? (
         <View>
-            <Text>{answer}</Text>
-            <Button title="Show Question" onPress={handleCardFlip} />
+            <Text style={styles.cardAnswer}>{answer}</Text>
+            <TouchableOpacity onPress={handleCardFlip}>
+                <Text style={styles.showText}>Show Question</Text>
+            </TouchableOpacity>
         </View>
     ) : (
         <View>
-            <Text>{question}</Text>
-            <Button title="Show Answer" onPress={handleCardFlip} />
+            <Text style={styles.cardQuestion}>{question}</Text>
+            <TouchableOpacity onPress={handleCardFlip}>
+                <Text style={styles.showText}>Show Answer</Text>
+            </TouchableOpacity>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    cardQuestion: {
+        ...globalStyles.titleText,
+        fontSize: 35,
+        marginTop: 80,
+        marginBottom: 20
+    },
+    cardAnswer: {
+        ...globalStyles.titleText,
+        marginTop: 80,
+        marginBottom: 20
+    },
+    showText: {
+        ...globalStyles.subTitleText,
+        fontSize: 15,
+        marginBottom: 15
+    }
+});
 
 export default Card;

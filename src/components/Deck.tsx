@@ -1,10 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { Button, ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleDeleteDeck } from '../actions/decks';
 import { IStoreState } from '../reducers';
 import { IDeck } from '../utils/helpers';
+import { globalStyles } from '../utils/styles';
+import CustomButton from './CustomButton';
+import Separator from './Separator';
 
 const Deck: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     const { deckId } = route.params!;
@@ -26,22 +29,32 @@ const Deck: FC<StackScreenProps<any>> = ({ navigation, route }) => {
     };
 
     return deck === undefined ? (
-        <View>
+        <View style={globalStyles.mainContainer}>
             <Text>There was an internal issue...</Text>
         </View>
     ) : (
         <ScrollView>
-            <View>
-                <Text>{deck.title}</Text>
-                <Text>- {deck.questions.length} cards -</Text>
+            <View style={styles.deckContainer}>
+                <Text style={globalStyles.titleText}>{deck.title}</Text>
+                <Text style={globalStyles.subTitleText}>- {deck.questions.length} cards -</Text>
             </View>
             <View>
-                <Button title="Add Card" color="gray" onPress={handleAddCardNavigate} />
-                <Button title="Start Quiz" color="gray" onPress={handleStartQuizNavigate} />
-                <Button title="Delete Deck" color="gray" onPress={handleDeleteDeckPress} />
+                <CustomButton title="Add Card" color="gray" onPress={handleAddCardNavigate} />
+                <Separator />
+                <CustomButton title="Start Quiz" color="gray" onPress={handleStartQuizNavigate} />
+                <Separator />
+                <CustomButton title="Delete Deck" color="gray" onPress={handleDeleteDeckPress} />
             </View>
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    deckContainer: {
+        padding: 20,
+        margin: 5,
+        width: '100%'
+    }
+});
 
 export default Deck;

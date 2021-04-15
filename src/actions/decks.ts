@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { IDeck, IQuestionCard, _addCardToDeck, _deleteDeck, _saveDeckTitle } from "../utils/helpers";
+import { clearLocalNotification, IDeck, IQuestionCard, scheduleNotification, _addCardToDeck, _deleteDeck, _saveDeckTitle } from "../utils/helpers";
 
 export const GET_DECKS = 'GET_DECKS';
 export const ADD_DECK = 'ADD_DECK';
@@ -43,9 +43,6 @@ export function handleAddDeck(deckId: string): (dispatch: Dispatch) => Promise<a
         try {
             _saveDeckTitle(deckId);
         } catch (err) {
-            //TODO - add reverting the addition of the deck if error
-            // dispatch(removeCardFromDeck(deckId, card));
-            // alert('There was an error submitting your answer. Try again!');
         }
     };
 }
@@ -64,9 +61,6 @@ export function handleAddCardToDeck(deckId: string, card: IQuestionCard): (dispa
         try {
             _addCardToDeck(deckId, card);
         } catch (err) {
-            //TODO - add reverting the addition of the card if error
-            // dispatch(removeCardFromDeck(deckId, card));
-            // alert('There was an error submitting your answer. Try again!');
         }
     };
 }
@@ -80,6 +74,19 @@ function addCardToDeck(deckId: string, card: IQuestionCard): DeckActionTypes {
     };
 }
 
+export function handleNotificationSchedule(): (dispatch: Dispatch) => Promise<any> {
+    return async (): Promise<any> => {
+
+        try {
+            clearLocalNotification();
+            scheduleNotification();
+        } catch (err) {
+
+        }
+    };
+}
+
+
 
 export function handleDeleteDeck(deckId: string): (dispatch: Dispatch) => Promise<any> {
     return async (dispatch: Dispatch): Promise<any> => {
@@ -88,9 +95,6 @@ export function handleDeleteDeck(deckId: string): (dispatch: Dispatch) => Promis
         try {
             _deleteDeck(deckId);
         } catch (err) {
-            //TODO - add reverting the removal of the deck if error
-            // dispatch(removeCardFromDeck(deckId, card));
-            // alert('There was an error submitting your answer. Try again!');
         }
     };
 }
